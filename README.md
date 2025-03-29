@@ -1,6 +1,8 @@
 # Create Lazy Object
 
-A tiny zero dependency package that lets you define an object literal using a utility to lazily compute properties on access.
+A tiny zero-dependency package that lets you define an object literal using a utility to lazily compute properties on access.
+
+The first access to the property is cached, and then reused for subsequent accesses.
 
 Powered by proxies!
 
@@ -8,7 +10,7 @@ Powered by proxies!
 
 ```ts
 function expensiveComputation(): boolean {
-  //... imaging something expensive
+  //... imagine something expensive
   return true;
 }
 
@@ -22,6 +24,4 @@ console.log(lazyObject.test);
 
 ## Type safety
 
-Using the getters object provided to `createLazyObject`, all types are inferred by the return types of the getter functions.
-
-Using the utility is almost the same as defining an object as-is, it's just all the properties (and even methods) should be wrapped in functions.
+All types are inferred by the return types of the provided lazy functions. It's that simple!
