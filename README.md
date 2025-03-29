@@ -49,4 +49,3 @@ console.log(lazyObject.test);
 I wrote this package to make creating a context in my backend application more performant.
 
 It is handy to have a lazy object in the context so that it's generated on the fly when the backend accesses them.
-# create-lazy-object

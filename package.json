@@ -11,8 +11,13 @@
   },
   "keywords": [],
   "author": "Jack Wright",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "description": "",
+  "files": [
+    "./dist",
+    "./LICENSE",
+    "./README.md"
+  ],
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.13.14",
