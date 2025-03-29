@@ -1,6 +1,5 @@
 import { it, expect, vi } from "vitest";
 import { createLazyObject } from "./index";
-import defineLazyProperty from "define-lazy-prop";
 
 it("should run a test", () => {
   expect(true).toBe(true);
