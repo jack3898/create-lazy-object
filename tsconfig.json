@@ -6,7 +6,9 @@
     "outDir": "dist",
     "lib": ["ES2024", "DOM"],
     "module": "Preserve",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "sourceMap": true
   },
-  "exclude": ["**/*.test.ts"]
+  "exclude": ["**/*.test.ts", "dist"]
 }
