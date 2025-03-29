@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "lib": ["ES2024", "DOM"],
+    "module": "Preserve",
+    "moduleResolution": "bundler"
+  }
+}

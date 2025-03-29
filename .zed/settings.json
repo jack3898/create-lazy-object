@@ -1,0 +1,15 @@
+{
+  "lsp": {
+    "biome": {
+      "settings": {
+        "config_path": "../biome.json"
+      }
+    }
+  },
+  "format_on_save": "on",
+  "formatter": {
+    "language_server": {
+      "name": "biome"
+    }
+  }
+}
