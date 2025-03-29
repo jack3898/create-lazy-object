@@ -7,5 +7,6 @@
     "lib": ["ES2024", "DOM"],
     "module": "Preserve",
     "moduleResolution": "bundler"
-  }
+  },
+  "exclude": ["**/*.test.ts"]
 }
