@@ -1,4 +1,4 @@
-import { it, expect, vi, describe } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import createLazyObjectDefault, {
   createLazyObject,
   injectLazyProp,
