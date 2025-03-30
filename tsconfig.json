@@ -4,11 +4,10 @@
     "exactOptionalPropertyTypes": true,
     "rootDir": "src",
     "outDir": "dist",
-    "lib": ["ES2024"],
-    "module": "Preserve",
+    "module": "preserve",
     "moduleResolution": "bundler",
     "declaration": true,
     "sourceMap": true
   },
-  "exclude": ["**/*.test.ts", "dist"]
+  "exclude": ["**/*.test.ts", "dist", "tsup.config.ts"]
 }
