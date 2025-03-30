@@ -22,6 +22,16 @@ const lazyObject = createLazyObject({
 console.log(lazyObject.test);
 ```
 
+## Remove a cached item
+
+Simply delete the property from the object.
+
+```ts
+delete lazyObject.test;
+```
+
+Then the next access will recompute the value. Make sure to type the return value of the lazy function as optional (undefined) to prevent any type errors you may get.
+
 ## Type safety
 
 All types are inferred by the return types of the provided lazy functions. It's that simple!

@@ -1,40 +1,55 @@
-export function createLazyObject<
-  K extends string,
-  // biome-ignore lint/suspicious/noExplicitAny: any type is needed for function type constraint
-  F extends (...args: any[]) => any,
-  R extends ReturnType<F>,
->(getters: Record<K, F>): { [I in K]: R } {
-  const cache: Record<K, R> = {} as Record<K, R>; // I don't usually like type assertions but I think this type is unavoidable
+function isKeyOf<T extends Record<PropertyKey, unknown>>(
+  key: PropertyKey,
+  obj: T,
+): key is keyof T {
+  return key in obj;
+}
 
-  return new Proxy<Record<K, R>>(cache, {
-    get(target, property: K): R {
-      if (Object.hasOwn(target, property)) {
+export function createLazyObject<
+  // biome-ignore lint/suspicious/noExplicitAny: Use of any is necessary here for a generic function constraint
+  T extends Record<string, (() => any) | undefined>,
+>(getters: T): { [K in keyof T]: ReturnType<NonNullable<T[K]>> } {
+  const cache = {} as { [K in keyof T]: ReturnType<NonNullable<T[K]>> };
+
+  return new Proxy(cache, {
+    get(target, property) {
+      if (isKeyOf(property, target)) {
         return target[property];
       }
 
-      const value: R = getters[property]();
+      if (isKeyOf(property, getters)) {
+        const getter = getters[property];
+        const value = getter?.();
 
-      target[property] = value;
+        target[property] = value;
 
-      return value;
+        return value;
+      }
+
+      return undefined;
     },
-    set(target, property: K, newValue: R) {
-      target[property] = newValue;
+    set(target, property, value) {
+      // @ts-expect-error - Due to the cache (an optional construct), inheriting types that represent the proxied object (a not so optional construct), this assignment is valid
+      target[property] = value;
 
       return true;
     },
-    has(target, property) {
+    has(target, property: string) {
       this?.get?.(target, property, undefined);
 
-      return Object.hasOwn(target, property);
+      return property in target;
     },
     ownKeys() {
       return Object.keys(getters);
     },
-    deleteProperty(target, property: K) {
-      return delete target[property];
+    deleteProperty(target, property) {
+      if (typeof property === "string") {
+        return delete target[property];
+      }
+
+      return false;
     },
-    getOwnPropertyDescriptor(target, prop) {
+    getOwnPropertyDescriptor() {
       return {
         enumerable: true,
         configurable: true,

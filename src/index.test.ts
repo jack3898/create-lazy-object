@@ -1,27 +1,31 @@
 import { it, expect, vi } from "vitest";
-import { createLazyObject } from "./index";
+import createLazyObjectDefault, { createLazyObject } from "./index";
 
 it("should run a test", () => {
   expect(true).toBe(true);
 });
 
+it("should expose correct exports", () => {
+  expect(createLazyObjectDefault).toBe(createLazyObject);
+});
+
 it("should get a property", () => {
-  const object = {};
+  const value = true;
 
-  const lazyObject = createLazyObject({ test: () => object });
+  const lazyObject = createLazyObject({ test: () => value });
 
-  expect(lazyObject.test).toBe(object);
+  expect(lazyObject.test).toBe(value);
 });
 
 it("should set a property", () => {
   const object = true;
-  const settedObject = false;
+  const setted = false;
 
   const lazyObject = createLazyObject({ test: () => object });
 
-  lazyObject.test = settedObject;
+  lazyObject.test = setted;
 
-  expect(lazyObject.test).toBe(settedObject);
+  expect(lazyObject.test).toBe(setted);
 });
 
 it("should cache getting a property", () => {
@@ -66,4 +70,38 @@ it("should get the values for the lazy object", () => {
   const lazyObject = createLazyObject({ test: () => true, test2: () => false });
 
   expect(Object.values(lazyObject)).toEqual([true, false]);
+});
+
+it("should delete a property from the cache", () => {
+  const getter = vi.fn();
+
+  const lazyObject = createLazyObject({
+    test: () => getter(),
+  });
+
+  lazyObject.test;
+
+  // biome-ignore lint/performance/noDelete: test case
+  delete lazyObject.test;
+
+  lazyObject.test;
+  lazyObject.test;
+
+  expect(getter).toHaveBeenCalledTimes(2);
+});
+
+it("should represent an object if it's used in whole", () => {
+  const lazyObject = createLazyObject({
+    test: () => true,
+    test2: () => false,
+    test3: () => ({ key: "value" }),
+    test4: () => undefined,
+  });
+
+  expect(lazyObject).toEqual({
+    test: true,
+    test2: false,
+    test3: { key: "value" },
+    test4: undefined,
+  });
 });
