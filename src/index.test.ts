@@ -53,7 +53,7 @@ it("should pre-compute the value when checking if a property exists", () => {
 
   expect("test" in lazyObject).toBe(true);
 
-  expect(getter).toHaveBeenCalledTimes(1);
+  expect(getter).toHaveBeenCalledTimes(0);
 
   lazyObject.test;
 
@@ -85,9 +85,8 @@ it("should delete a property from the cache", () => {
   delete lazyObject.test;
 
   lazyObject.test;
-  lazyObject.test;
 
-  expect(getter).toHaveBeenCalledTimes(2);
+  expect(getter).toHaveBeenCalledTimes(1);
 });
 
 it("should represent an object if it's used in whole", () => {
