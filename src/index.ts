@@ -7,7 +7,13 @@ export function injectLazyProp<
   target: T,
   property: K,
   getter: F,
-): asserts target is T & { [Key in K]: ReturnType<F> } {
+): asserts target is {
+  // It's a bit of a mess, but this cleans up nasty intersection types when the function is called sequentially in an app
+  // and generates a clean easy-to-read type for the user
+  [K2 in keyof (T & { [Key in K]: ReturnType<F> })]: (T & {
+    [Key in K]: ReturnType<F>;
+  })[K2];
+} {
   Object.defineProperty(target, property, {
     get() {
       const value = getter();
