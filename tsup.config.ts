@@ -4,7 +4,6 @@ export default defineConfig({
   entryPoints: ["src/index.ts"],
   format: ["esm"],
   dts: true,
-  sourcemap: true,
   clean: true,
-  minify: true,
+  target: "es6",
 });

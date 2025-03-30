@@ -7,7 +7,7 @@
     "module": "preserve",
     "moduleResolution": "bundler",
     "declaration": true,
-    "sourceMap": true
+    "target": "ES6"
   },
   "exclude": ["**/*.test.ts", "dist", "tsup.config.ts"]
 }
