@@ -41,3 +41,7 @@ This package is one of the most type-safe packages around lazy property creation
 `createLazyObject`'s type signature is inferred from the return type of all the getter functions.
 
 The `injectLazyProp` function asserts the type signature of objects passed into it, which means not only does it inject the property at runtime, but at the type level too.
+
+## Give it a spin!
+
+Check out a pre-configured playground [here](https://stackblitz.com/edit/stackblitz-starters-pyenggnw?file=src%2Findex.ts) and give create-lazy-object a spin!
