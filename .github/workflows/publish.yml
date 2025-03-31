@@ -21,6 +21,7 @@ jobs:
           NODE_ENV: development
       - name: Run quality checks
         run: |
+          npm run knip
           npm run check
           npm run type-check
           npm run test

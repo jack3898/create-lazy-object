@@ -9,5 +9,5 @@
     "declaration": true,
     "target": "ES6"
   },
-  "exclude": ["**/*.test.ts", "dist", "tsup.config.ts"]
+  "exclude": ["dist", "tsup.config.ts"]
 }
