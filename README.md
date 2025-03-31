@@ -4,9 +4,9 @@ A tiny zero-dependency package that lets you define an object literal using a ut
 
 The first access to the property is cached, and then reused for subsequent accesses.
 
-## API
+## createLazyObject
 
-There are two ways to define a lazy object. The first way is to use `createLazyObject`:
+The first way is to use `createLazyObject`. This method returns a new object with the lazy properties added in an immutable way.
 
 ```ts
 const lazyObject = createLazyObject({
@@ -21,7 +21,24 @@ const lazyObject = createLazyObject({
 console.log(lazyObject.test);
 ```
 
-The second way is to use `injectLazyProp`:
+You can even merge another object into the lazy object:
+
+```ts
+const lazyObject = createLazyObject(
+  {
+    test: () => {
+      console.log("Doing something expensive...");
+
+      return 42;
+    },
+  },
+  { test2: "Not lazy" },
+);
+```
+
+## injectLazyProp
+
+The second way is to use `injectLazyProp`. This method will mutate the object passed into it, unlike `createLazyObject`. It does not return anything.
 
 ```ts
 const object = {
@@ -45,9 +62,3 @@ The `injectLazyProp` function asserts the type signature of objects passed into 
 ## Give it a spin!
 
 Check out a pre-configured playground [here](https://stackblitz.com/edit/stackblitz-starters-pyenggnw?file=src%2Findex.ts) and give create-lazy-object a spin!
-
-## Note on module type
-
-This package is distributed with ESM syntax only.
-
-I apologise in advance for any inconvenience this may cause.

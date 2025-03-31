@@ -1,5 +1,10 @@
 import { injectLazyProp } from "./inject-lazy-prop";
-import type { AnyFn, LazyObjectResult, LazyOpts } from "./types";
+import type {
+  AnyFn,
+  LazyObjectResult,
+  LazyOpts,
+  ResolvedGetters,
+} from "./types";
 
 /**
  * Given an object literal of getter functions, this utility function will create a new object that will lazily evaluate the properties when accessed.
@@ -26,8 +31,18 @@ import type { AnyFn, LazyObjectResult, LazyOpts } from "./types";
 export function createLazyObject<
   T extends Record<string, AnyFn>,
   M extends Record<PropertyKey, unknown>,
->(getters: T, mergeWith?: M, opts?: LazyOpts<keyof T>): LazyObjectResult<T, M> {
-  const result = (mergeWith ? { ...mergeWith } : {}) as LazyObjectResult<T, M>;
+>(
+  getters: T,
+  mergeWith?: M,
+  opts?: LazyOpts<keyof T>,
+): {
+  // It's a bit of a mess, but this cleans up nasty intersection types when the function is called sequentially in an app
+  // and generates a clean easy-to-read type for the user. Extracting to a utility type does not work here.
+  [K in keyof (ResolvedGetters<T> & M)]: (ResolvedGetters<T> & M)[K];
+} {
+  const result = (mergeWith ? { ...mergeWith } : {}) as {
+    [K in keyof (ResolvedGetters<T> & M)]: (ResolvedGetters<T> & M)[K];
+  };
 
   for (const [key, getter] of Object.entries(getters)) {
     injectLazyProp(result, key, getter, opts);

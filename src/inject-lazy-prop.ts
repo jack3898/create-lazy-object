@@ -30,7 +30,7 @@ export function injectLazyProp<
   opts: LazyOpts<K> = {},
 ): asserts target is {
   // It's a bit of a mess, but this cleans up nasty intersection types when the function is called sequentially in an app
-  // and generates a clean easy-to-read type for the user
+  // and generates a clean easy-to-read type for the user. Extracting to a utility type does not work here.
   [K2 in keyof (T & { [Key in K]: ReturnType<F> })]: (T & {
     [Key in K]: ReturnType<F>;
   })[K2];

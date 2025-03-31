@@ -11,5 +11,11 @@
     "language_server": {
       "name": "biome"
     }
+  },
+  "languages": {
+    "Markdown": {
+      "formatter": "prettier",
+      "format_on_save": "on"
+    }
   }
 }

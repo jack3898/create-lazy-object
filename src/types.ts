@@ -4,7 +4,7 @@ export type LazyOpts<K> = {
 
 export type AnyFn = (...args: unknown[]) => unknown;
 
-type ResolvedGetters<T extends Record<string, AnyFn>> = {
+export type ResolvedGetters<T extends Record<string, AnyFn>> = {
   [K in keyof T]: ReturnType<T[K]>;
 };
 
