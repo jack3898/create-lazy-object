@@ -1,10 +1,5 @@
 import { injectLazyProp } from "./inject-lazy-prop";
-import type {
-  AnyFn,
-  LazyObjectResult,
-  LazyOpts,
-  ResolvedGetters,
-} from "./types";
+import type { AnyFn, LazyOpts, ResolvedGetters } from "./types";
 
 /**
  * Given an object literal of getter functions, this utility function will create a new object that will lazily evaluate the properties when accessed.
@@ -30,7 +25,7 @@ import type {
  */
 export function createLazyObject<
   T extends Record<string, AnyFn>,
-  M extends Record<PropertyKey, unknown>,
+  M extends Record<PropertyKey, unknown> = Record<never, unknown>,
 >(
   getters: T,
   mergeWith?: M,
